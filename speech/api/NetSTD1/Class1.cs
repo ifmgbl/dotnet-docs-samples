@@ -5,16 +5,25 @@ using CommandLine;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Speech.V1;
 using Grpc.Auth;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace NetSTD1
 {
     public class Class1
     {
+        public static int Main(string[] args)
+        {
+            Console.WriteLine("Ciao da Joba e .NET Core");
+            var filePath = @"C:\";
+            var T = StreamingRecognizeAsync(filePath);
+
+            T.Wait();
+
+            return 0;
+        }
+
         static async Task<object> StreamingRecognizeAsync(string filePath)
         {
             var speech = SpeechClient.Create();
@@ -30,7 +39,7 @@ namespace NetSTD1
                             Encoding =
                             RecognitionConfig.Types.AudioEncoding.Linear16,
                             SampleRateHertz = 16000,
-                            LanguageCode = "en",
+                            LanguageCode = "it",
                         },
                         InterimResults = true,
                     }
