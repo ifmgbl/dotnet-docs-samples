@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    class Program
+    class ASRJStreamingWithFile
     {
-        static string defInputFilePath = @"F:\IFMWork_ASRTTS\BoceraniTrascrizioni\_VOC_35977945.pcm000.pcm";
+        //static string defInputFilePath = @"F:\IFMWork_ASRTTS\BoceraniTrascrizioni\_VOC_35977945.pcm000.pcm";
+        static string defInputFilePath = @"F:\IFM_ASRTTS\TTS_IVONA_Carla.wav";
 
         static int Main(string[] args)
         {
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", @"F:\IFMWork_ASRTTS\ASRTTS_Cloud\ASRAziendale-a2226fbd6a6f.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", @"D:\Users\joba\Desktop\ASRAziendale-a2226fbd6a6f.json");
+
             string inputFile;
 
             if (args.Count() < 1)
@@ -29,13 +32,13 @@ namespace ConsoleApp1
                 inputFile = args[0];
             }
 
-            var t = StreamingRecognizeAsync(inputFile);
+            var t = StreamingRecognizeAsync(inputFile, 22050);
             t.Wait();
 
             return 0;
         }
 
-        static async Task<object> StreamingRecognizeAsync(string filePath)
+        static async Task<object> StreamingRecognizeAsync(string filePath, int freqsamp = 8000)
         {
             var speech = SpeechClient.Create();
             var streamingCall = speech.StreamingRecognize();
@@ -49,7 +52,7 @@ namespace ConsoleApp1
                         {
                             Encoding =
                             RecognitionConfig.Types.AudioEncoding.Linear16,
-                            SampleRateHertz = 8000,
+                            SampleRateHertz = freqsamp,
                             LanguageCode = "it",
                         },
                         InterimResults = true,
