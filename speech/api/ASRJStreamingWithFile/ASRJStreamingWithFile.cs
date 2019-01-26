@@ -12,15 +12,16 @@ namespace ConsoleApp1
     class ASRJStreamingWithFile
     {
         //static string defInputFilePath = @"F:\IFMWork_ASRTTS\BoceraniTrascrizioni\_VOC_35977945.pcm000.pcm";
-        static string defInputFilePath = @"F:\IFM_ASRTTS\TTS_IVONA_Carla.wav";
+        static string defInputFilePath = @"F:\IFMWork_ASRTTS\TTS_IVONA_Carla.wav";
 
         static int Main(string[] args)
         {
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", @"F:\IFMWork_ASRTTS\ASRTTS_Cloud\ASRAziendale-a2226fbd6a6f.json");
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", @"D:\Users\joba\Desktop\ASRAziendale-a2226fbd6a6f.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", @"F:\IFMWork_ASRTTS\ASRAziendale-a2226fbd6a6f.json");
 
+            Console.WriteLine("Test ASR Google By Joba!!!");
+            
             string inputFile;
-
             if (args.Count() < 1)
             {
                 Array.Resize(ref args, 20);
@@ -33,7 +34,21 @@ namespace ConsoleApp1
             }
 
             var t = StreamingRecognizeAsync(inputFile, 22050);
-            t.Wait();
+
+            try
+            {
+                 t.Wait();
+            }
+            catch (AggregateException ex)
+            {
+               Console.WriteLine($"AggregateException{ex.ToString()}");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"AggregateException{ex.ToString()}");
+            }
+              
+            Console.WriteLine("Test ASR Google Terminated!!!");
 
             return 0;
         }
